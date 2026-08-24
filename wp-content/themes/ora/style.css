@@ -1,0 +1,24 @@
+/*
+Theme Name: Ora
+Theme URI: https://ora-champagne.com/
+Author: Mafalda Reis
+Author URI: https://ora-champagne.com/
+Description: Tema WordPress da ORA Champagne. Layout editorial em Bootstrap + jQuery, com gestão total de conteúdo pelo Personalizar, custom post type de Produtos, taxonomia de Coleções e Moments (artigos). Inclui importador de conteúdo demo.
+Version: 1.0.0
+Requires at least: 6.0
+Tested up to: 6.8
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: ora
+Tags: custom-menu, custom-logo, featured-images, translation-ready, full-width-template, editor-style
+*/
+
+/*
+ * ATENÇÃO
+ * Este ficheiro existe apenas para o cabeçalho obrigatório do tema.
+ * As folhas de estilo reais são carregadas a partir de:
+ *   assets/css/style.css   (o CSS original do site, intacto)
+ *   assets/css/ora-wp.css  (ajustes específicos de WordPress)
+ * Para personalizações, usa o tema filho "Ora Child".
+ */

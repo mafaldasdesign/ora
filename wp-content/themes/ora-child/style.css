@@ -1,0 +1,29 @@
+/*
+Theme Name: Ora Child
+Theme URI: https://ora-champagne.com/
+Template: ora
+Author: Mafalda Reis
+Author URI: https://ora-champagne.com/
+Description: Tema filho da ORA Champagne. Faz aqui todas as personalizações — CSS, funções e templates — para que as atualizações do tema principal não sobreponham o teu trabalho.
+Version: 1.0.0
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: ora-child
+*/
+
+/* =========================================================
+   Escreve aqui as tuas personalizações de CSS.
+   Este ficheiro é carregado DEPOIS de todos os estilos
+   do tema principal, por isso sobrepõe-se a eles.
+
+   As variáveis de cor da marca (definidas em :root no tema
+   principal) podem ser redefinidas aqui:
+
+   :root{
+       --preto: #141414;
+       --branco: #FFFAE5;
+       --vermelho: #660708;
+       --verde: #29361B;
+   }
+   ========================================================= */

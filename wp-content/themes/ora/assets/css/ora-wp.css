@@ -1,0 +1,443 @@
+/* =========================================================
+   ORA — Ajustes específicos de WordPress
+   O ficheiro style.css original mantém-se intacto.
+   ========================================================= */
+
+/* --- Menus dinâmicos: replica o comportamento das classes
+       .menu-collection / .menu-moments para qualquer submenu --- */
+.nav-list > li:hover > .second-list{
+	display: block;
+}
+.nav-list > li:hover > a{
+	color: var(--branco);
+}
+.nav-list > li.current-menu-item > a,
+.nav-list > li.current-menu-ancestor > a,
+.nav-list > li.current-menu-parent > a,
+.nav-list > li.active > a{
+	color: var(--branco);
+}
+.second-list li.current-menu-item > a{
+	color: var(--branco);
+}
+/* Nota: o alinhamento das listas (.nav-list e .second-list) é o do site
+   original — vem do reboot do Bootstrap. Não sobrepor aqui. */
+
+/* --- Barra de administração --- */
+.admin-bar .header{
+	top: 42px;
+}
+@media (max-width: 782px){
+	.admin-bar .header{
+		top: 56px;
+	}
+}
+
+/* --- Banners: garantem o comportamento original mesmo quando a
+       imagem vem do Personalizar (inline style) --- */
+.homepage-banner,
+.story-banner,
+.collection-banner,
+.moments-banner,
+.martini-banner,
+.product-banner,
+.legal-banner{
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+}
+
+/* O banner da Collection assenta sobre uma fotografia escura, mas a página
+   usa o esquema "white" (texto vermelho). O título e o indicador de scroll
+   são forçados para o branco do site. */
+.collection-banner h1,
+.collection-banner .scroll,
+.collection-banner .scroll p{
+	color: var(--branco);
+}
+
+/* --- Newsletter (formulário estático e Contact Form 7) --- */
+.newsletter .wpcf7,
+.newsletter .newsletter-form{
+	text-align: center;
+}
+.newsletter .newsletter-info,
+.newsletter .send{
+	display: block;
+	text-align: center;
+	margin: 0;
+}
+.newsletter .newsletter-info .wpcf7-form-control-wrap{
+	display: block;
+}
+.newsletter input[type="text"],
+.newsletter input[type="email"]{
+	display: inline-block;
+	width: 800px;
+	max-width: 100%;
+	background-color: var(--branco);
+	color: var(--verde);
+	padding: 10px 25px;
+	margin-bottom: 10px;
+	border: none;
+	border-radius: 100px;
+	font-family: SFPro, sans-serif;
+	font-size: 20px;
+	line-height: 23px;
+	font-weight: 100;
+	text-align: left;
+}
+.newsletter input[type="text"]::placeholder,
+.newsletter input[type="email"]::placeholder{
+	color: var(--verde);
+	opacity: 1;
+}
+.newsletter input[type="text"]::-webkit-input-placeholder,
+.newsletter input[type="email"]::-webkit-input-placeholder{
+	color: var(--verde);
+}
+.newsletter input[type="text"]:focus,
+.newsletter input[type="email"]:focus{
+	outline: 2px solid var(--verde);
+	outline-offset: 2px;
+}
+.newsletter input[type="submit"]{
+	display: inline-block;
+	background-color: var(--branco);
+	color: var(--verde);
+	padding: 15px 35px;
+	margin-top: 20px;
+	border: none;
+	border-radius: 100px;
+	font-family: SFPro, sans-serif;
+	font-size: 20px;
+	line-height: 23px;
+	cursor: pointer;
+	transition: background-color .4s ease, color .4s ease;
+}
+.newsletter input[type="submit"]:hover{
+	background-color: var(--verde);
+	color: var(--branco);
+}
+.newsletter .wpcf7-spinner{
+	display: block;
+	margin: 10px auto 0 auto;
+}
+.newsletter .wpcf7-not-valid-tip,
+.newsletter .wpcf7-response-output{
+	font-family: SFPro, sans-serif;
+	font-size: 16px;
+	color: var(--branco);
+	border-color: var(--branco-opacidade);
+	max-width: 800px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+/* --- Homepage: bloco "The Collection" ---
+   O fundo é a forma em creme original (1512×1111, cantos transparentes).
+   Em tamanho natural não acompanhava a altura da secção e o conteúdo
+   transbordava-a. Passa a ser esticada exatamente à medida da secção, para
+   a forma existir sempre por baixo de tudo, seja qual for o ecrã.
+   As margens verticais mantêm o conteúdo afastado das ondas do topo e do
+   fundo da forma, que ocupam cerca de 5% da altura. */
+.collection{
+	background-size: 100% 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	padding: 100px 0;
+	align-items: center;
+}
+.collection-info{
+	flex-wrap: nowrap;
+	gap: 25px;
+}
+.collection-info .collection-textos{
+	flex: 1 1 auto;
+	width: auto;
+	max-width: none;
+}
+.collection-info > .col{
+	flex: 0 0 auto;
+	width: auto;
+	display: flex;
+	justify-content: flex-end;
+}
+/* O botão já tem largura própria: a classe de grelha não o deve encolher. */
+.collection-info .btn-vermelho{
+	flex: 0 0 auto;
+	width: 153px;
+}
+
+/* --- Página legal / conteúdo editorial genérico --- */
+.legal-content{
+	padding: 120px 0 100px 0;
+	min-height: 60vh;
+}
+.legal-content h1,
+.legal-content h2,
+.legal-content h3{
+	margin-bottom: 20px;
+}
+.legal-content h2{
+	font-size: 48px;
+	line-height: 58px;
+}
+.legal-content h3{
+	font-size: 34px;
+	line-height: 44px;
+}
+.legal-content p,
+.legal-content li{
+	font-family: SFPro, sans-serif;
+	font-size: 20px;
+	line-height: 30px;
+	font-weight: 100;
+	margin-bottom: 18px;
+}
+.legal-content a{
+	color: inherit;
+}
+.legal-content ul,
+.legal-content ol{
+	padding-left: 22px;
+	margin-bottom: 24px;
+}
+
+/* --- Estados vazios / paginação --- */
+.ora-empty{
+	text-align: center;
+	padding: 60px 0;
+}
+.ora-pagination{
+	display: flex;
+	justify-content: center;
+	gap: 15px;
+	padding: 40px 0 80px 0;
+	font-family: SilverEditorial, serif;
+	font-size: 20px;
+}
+.ora-pagination a,
+.ora-pagination span{
+	text-decoration: none;
+	color: inherit;
+	opacity: .6;
+	transition: .3s;
+}
+.ora-pagination a:hover,
+.ora-pagination .current{
+	opacity: 1;
+}
+
+/* --- Imagens: proporção estável, independente do ficheiro carregado ---
+   No site estático todas as fotografias tinham exatamente o mesmo tamanho.
+   No WordPress qualquer pessoa pode carregar uma imagem com outra proporção,
+   por isso é a folha de estilos que fixa o formato de cada tipo de cartão:
+   a imagem preenche o espaço e o excesso é recortado, em vez de esticar
+   ou desalinhar a grelha. */
+
+/* Cartões de produto — formato vertical (o mesmo 325×557 do original). */
+.product-card img{
+	width: 100%;
+	height: auto;
+	aspect-ratio: 325 / 557;
+	object-fit: cover;
+	display: block;
+}
+
+/* Garrafas recortadas em PNG: mostram-se inteiras, sem corte. */
+.product-card.sunset-card img{
+	aspect-ratio: 1 / 1;
+	object-fit: contain;
+}
+
+/* Faixa de quatro imagens da homepage. */
+.collection .collection-img .col img{
+	width: 100%;
+	height: auto;
+	aspect-ratio: 325 / 557;
+	object-fit: cover;
+	display: block;
+}
+
+/* Imagem de apresentação do produto e do cocktail:
+   mantém a proporção e nunca ultrapassa a coluna. */
+.martini-intro-content .martini-img img{
+	max-width: 100%;
+	height: auto;
+}
+
+/* --- Cartões dos cocktails ---
+   No site estático a legenda era posicionada com paddings fixos, calculados
+   para a altura de cada fotografia. Como no WordPress as imagens passam todas
+   pelo mesmo recorte, a legenda é alinhada ao fundo do cartão — fica sempre
+   na mesma posição, seja qual for a imagem carregada. */
+.bebida a{
+	position: relative;
+	display: block;
+	overflow: hidden;
+}
+.bebida img{
+	width: 100%;
+	height: auto;
+	aspect-ratio: 325 / 376;
+	object-fit: cover;
+	display: block;
+}
+.bebida .overlay{
+	position: absolute;
+	inset: 0;
+	width: auto;
+	height: auto;
+	transform: none;
+	display: flex;
+	align-items: flex-end;
+	opacity: 0;
+	visibility: hidden;
+	background-color: var(--branco-opacidade);
+	transition: opacity .5s ease, visibility .5s ease;
+}
+.bebida:hover .overlay{
+	display: flex;
+	opacity: 1;
+	visibility: visible;
+}
+.bebida a p,
+.bebida.pa a p{
+	padding: 0 20px 30px 20px;
+	margin: 0;
+}
+
+/* --- Página de uma coleção (Summer Edition, New Year's Eve) --- */
+.collection-term{
+	margin-top: 100px;
+	margin-bottom: 100px;
+}
+.collection-term .list-text{
+	margin-bottom: 40px;
+}
+.collection-term .product-card{
+	margin-bottom: 40px;
+}
+
+/* --- Setas do carrossel ---
+   Centradas por percentagem em vez do valor fixo em px do original
+   (47,9% de 653px = os mesmos 286px), para acompanharem a caixa em
+   qualquer largura. */
+.carousel-arrow{
+	top: 47.9%;
+	transform: translateY(-50%);
+}
+.carousel-arrow:hover{
+	transform: translateY(-50%) scale(1.1);
+}
+
+/* =========================================================
+   Ecrãs de toque — sem estados de hover
+   Num ecrã tátil não existe "sair com o rato": ao tocar num botão o
+   navegador deixa-o em :hover até se tocar noutro sítio. O efeito de
+   preenchimento ficava preso e dava a sensação de que era preciso clicar
+   fora para o site voltar a responder. Aqui os estados de hover são
+   desligados em dispositivos sem rato, e o toque passa a ser tratado como
+   um gesto normal — pode começar em cima de um botão e continuar em scroll.
+   ========================================================= */
+.btn-branco,
+.btn-vermelho,
+.bebida a,
+.product-card a,
+.carousel-arrow,
+.nav a,
+.footer a{
+	touch-action: manipulation;
+	-webkit-tap-highlight-color: transparent;
+}
+
+/* Impede a pré-visualização e a seleção que o sistema mostra ao manter o
+   dedo em cima de um botão — aqui o toque demorado serve para ver a
+   animação. */
+.btn-branco,
+.btn-vermelho{
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+
+@media (hover: none), (pointer: coarse){
+
+	/* Botões: o :hover do navegador fica preso depois do toque, por isso é
+	   anulado. A animação não se perde — passa a ser comandada pelo toque,
+	   através da classe .is-pressed (ver assets/js/ora-mobile.js), que pode
+	   ser desligada assim que o dedo sai ou se toca noutro sítio. */
+	.btn-branco:hover::before,
+	.btn-vermelho:hover::before{
+		transform: none;
+	}
+	.btn-branco:hover{
+		color: var(--verde);
+	}
+	.btn-vermelho:hover{
+		color: var(--branco);
+	}
+	.btn-branco.is-pressed::before,
+	.btn-vermelho.is-pressed::before{
+		transform: translateY(-101px);
+	}
+	.btn-branco.is-pressed,
+	.btn-vermelho.is-pressed{
+		color: var(--branco);
+	}
+
+	/* Selo da homepage: sem rotação. */
+	.selo-meio:hover{
+		transform: none;
+	}
+
+	/* Cartões e setas: sem alteração de cor nem de escala. O zoom da imagem
+	   também é anulado, senão o :hover fica preso depois do toque. */
+	.product-card a:hover{
+		color: var(--vermelho);
+	}
+	.product-card a:hover .product-card-img img{
+		transform: none;
+	}
+	.sunset-card:hover h4{
+		color: var(--branco);
+	}
+	.carousel-arrow:hover{
+		transform: translateY(-50%);
+	}
+	.nav li a:hover,
+	.second-list li a:hover,
+	.footer a:hover{
+		color: var(--branco-opacidade);
+	}
+}
+
+/* --- Acessibilidade --- */
+.screen-reader-text{
+	border: 0;
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: inset(50%);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+	word-wrap: normal !important;
+}
+.skip-link:focus{
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	z-index: 100000;
+	clip: auto;
+	clip-path: none;
+	height: auto;
+	width: auto;
+	padding: 12px 20px;
+	background: var(--branco);
+	color: var(--vermelho);
+	font-family: SFPro, sans-serif;
+}

@@ -1,0 +1,815 @@
+/* =========================================================
+   ORA — Responsivo
+   O site foi desenhado para desktop. Esta folha adapta-o
+   para baixo, sem tocar em assets/css/style.css.
+
+   Pontos de rutura (os do Bootstrap 5):
+     1399.98px  desktop grande
+     1199.98px  desktop pequeno / tablet horizontal
+      991.98px  tablet — o menu passa a hambúrguer
+      767.98px  telemóvel grande
+      575.98px  telemóvel
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   Botão do menu (escondido em desktop)
+   --------------------------------------------------------- */
+.nav-toggle{
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	gap: 6px;
+	width: 42px;
+	height: 42px;
+	padding: 0;
+	border: none;
+	background: none;
+	cursor: pointer;
+	/* Tem de ser posicionado: sem isto o z-index não conta e o painel de
+	   navegação (z-index 90) tapa o próprio botão quando o menu está aberto. */
+	position: relative;
+	z-index: 101;
+}
+.nav-toggle span{
+	display: block;
+	width: 28px;
+	height: 2px;
+	background: var(--branco);
+	transition: transform .35s ease, opacity .25s ease;
+}
+
+/* =========================================================
+   ≤ 1399.98px
+   ========================================================= */
+@media (max-width: 1399.98px){
+	h2{
+		font-size: 96px;
+		line-height: 110px;
+	}
+	.story-banner h1,
+	.collection-banner h1,
+	.product-banner h1,
+	.moments-banner h1,
+	.martini-banner h1{
+		font-size: 96px;
+		line-height: 110px;
+	}
+}
+
+/* =========================================================
+   ≤ 1199.98px
+   ========================================================= */
+@media (max-width: 1199.98px){
+	h1{ font-size: 60px; line-height: 78px; }
+	h2{ font-size: 78px; line-height: 90px; }
+	h3{ font-size: 60px; line-height: 78px; }
+
+	.story-banner h1,
+	.collection-banner h1,
+	.product-banner h1,
+	.moments-banner h1,
+	.martini-banner h1{
+		font-size: 78px;
+		line-height: 90px;
+	}
+
+	.collection{
+		min-height: 0;
+		padding: 80px 0;
+	}
+
+	.selo-esquerda{ left: 40px; }
+	.selo-direita{ right: 40px; }
+
+	/* --- Carrossel de best sellers: geometria proporcional ---
+	   As mesmas proporções da versão original (caixa de 1126×653),
+	   convertidas em percentagens para acompanhar a largura. */
+	.bestseller-carousel{
+		width: 100%;
+		max-width: 1126px;
+		height: auto;
+		aspect-ratio: 1126 / 653;
+	}
+	.bestseller-slot,
+	.bestseller-slot.pos-left{
+		left: 8.17%;
+		top: 11.18%;
+		width: 28.66%;
+		height: 77.93%;
+	}
+	.bestseller-slot.pos-right{
+		left: 63.14%;
+		top: 11.18%;
+		width: 28.66%;
+		height: 77.93%;
+	}
+	.bestseller-slot.pos-center{
+		left: 32.42%;
+		top: 0;
+		width: 35.17%;
+		height: 95.71%;
+	}
+}
+
+/* =========================================================
+   ≤ 991.98px — tablet: menu hambúrguer e fim do scroll-driven
+   ========================================================= */
+@media (max-width: 991.98px){
+
+	h1{ font-size: 48px; line-height: 62px; }
+	h2{ font-size: 58px; line-height: 68px; }
+	h3{ font-size: 48px; line-height: 62px; }
+	p{ font-size: 18px; line-height: 26px; }
+
+	.story-banner h1,
+	.collection-banner h1,
+	.product-banner h1,
+	.moments-banner h1,
+	.martini-banner h1{
+		font-size: 58px;
+		line-height: 68px;
+	}
+
+	/* --- Header --- */
+	.header{
+		z-index: 100;
+	}
+	.header-content{
+		align-items: center;
+	}
+	.logo img, .logo svg{
+		max-height: 34px;
+		width: auto;
+	}
+	.nav-toggle{
+		display: flex;
+	}
+	.ora-menu-open .nav-toggle span:nth-child(1){
+		transform: translateY(8px) rotate(45deg);
+	}
+	.ora-menu-open .nav-toggle span:nth-child(2){
+		opacity: 0;
+	}
+	.ora-menu-open .nav-toggle span:nth-child(3){
+		transform: translateY(-8px) rotate(-45deg);
+	}
+
+	/* Em desktop o header desaparece depois do banner. Em ecrãs pequenos isso
+	   levaria o botão do menu com ele, deixando a navegação inacessível a meio
+	   da página — por isso, em vez de desaparecer, ganha um fundo esbatido. */
+	.header.header-hidden{
+		opacity: 1;
+		transform: none;
+		pointer-events: auto;
+	}
+	.header.header-hidden::before{
+		content: "";
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 92px;
+		z-index: -1;
+		pointer-events: none;
+		background-image: linear-gradient( to bottom, rgba(20, 20, 20, .92) 0%, rgba(20, 20, 20, .75) 55%, rgba(20, 20, 20, 0) 100% );
+	}
+	.ora-menu-open .header.header-hidden::before{
+		opacity: 0;
+	}
+
+	/* O header nunca desaparece com o menu aberto. */
+	.ora-menu-open .header,
+	.ora-menu-open .header.header-hidden{
+		opacity: 1;
+		transform: none;
+		pointer-events: auto;
+	}
+	.ora-menu-open{
+		overflow: hidden;
+	}
+
+	/* --- Painel de navegação --- */
+	/* O painel cobre o ecrã inteiro e tem scroll próprio (overflow-y).
+	   Fechado, tem de ficar completamente inerte: só esconder por
+	   visibility não chega — a área de scroll continua a apanhar a roda do
+	   rato e o gesto de deslizar, e a página fica sem se mexer. Daí o
+	   pointer-events: none e o overflow desligado enquanto está fechado. */
+	.nav{
+		position: fixed;
+		inset: 0;
+		z-index: 90;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 110px 30px 60px 30px;
+		background-color: var(--preto);
+		overflow: hidden;
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transform: translateY(-14px);
+		transition: opacity .35s ease, transform .35s ease;
+	}
+	.ora-menu-open .nav{
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		transform: none;
+	}
+	.nav-list{
+		flex-direction: column;
+		align-items: center;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+	.nav-list li{
+		white-space: normal;
+		text-align: center;
+	}
+	.nav a{
+		padding-left: 0;
+	}
+	.nav-list > li > a{
+		display: inline-block;
+		font-size: 34px;
+		line-height: 1.6;
+		color: var(--branco);
+	}
+	/* No painel os submenus estão sempre abertos: em toque não há hover. */
+	.second-list{
+		display: block;
+		position: static;
+		margin: 0;
+		padding: 2px 0 22px 0;
+	}
+	.second-list li a{
+		font-size: 16px;
+		line-height: 2;
+	}
+
+	/* --- Banners: título centrado --- */
+	.banner-title{
+		padding-top: 58vh;
+		text-align: center;
+	}
+
+	/* --- Homepage --- */
+	.collection-info{
+		flex-direction: column;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		gap: 25px;
+	}
+	.collection-info > .col{
+		justify-content: flex-start;
+	}
+	.collection-textos{
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+	.selo-esquerda,
+	.selo-direita{
+		display: none;
+	}
+	/* Selos da homepage (não confundir com a galeria da página Moments).
+	   Em desktop mantêm o tamanho natural; aqui são reduzidos. */
+	.moments > .moments-img{
+		display: flex;
+		justify-content: center;
+	}
+	.moments > .moments-img img{
+		height: auto;
+	}
+	.moments > .moments-img .selo-meio{
+		max-width: 400px;
+	}
+
+	/* --- Produto e cocktail ---
+	   O layout mantém-se: imagem à esquerda, texto à direita, em qualquer
+	   tamanho de ecrã. Só se reduz a folga entre as duas colunas. */
+	.martini-intro-content{
+		flex-wrap: nowrap;
+		align-items: center;
+	}
+	.martini-intro-content .martini-img{
+		margin-bottom: 0;
+	}
+	.martini-intro-content .martini-img img{
+		max-width: 100%;
+		height: auto;
+	}
+
+	/* --- Grelhas --- */
+	.summer-img .product-card,
+	.newyear-img .product-card,
+	.collection-term .product-card{
+		flex: 0 0 50%;
+		max-width: 50%;
+		margin-bottom: 40px;
+	}
+	.experimenta-img .product-card{
+		flex: 0 0 50%;
+		max-width: 50%;
+		margin-bottom: 40px;
+	}
+	.collection-img .bebida{
+		flex: 0 0 33.333%;
+		max-width: 33.333%;
+	}
+	/* Faixa de quatro imagens da homepage: mantém-se em fila, mas bem menor.
+	   Em desktop continuam no tamanho original. */
+	.collection .collection-img{
+		--bs-gutter-x: 10px;
+		justify-content: center;
+		flex-wrap: nowrap;
+	}
+	.collection .collection-img .col{
+		flex: 0 0 25%;
+		max-width: 25%;
+	}
+
+	/* Sem hover em toque: a legenda dos cocktails fica sempre visível. */
+	.bebida .overlay{
+		opacity: 1;
+		visibility: visible;
+		background-color: transparent;
+		background-image: linear-gradient( to top, rgba(20,20,20,.75) 0%, rgba(20,20,20,0) 55% );
+	}
+	.bebida a p{
+		color: var(--branco);
+		font-size: 26px;
+		line-height: 30px;
+	}
+
+	/* --- Story --- */
+	.ritual-scroll{
+		height: 300vh;
+	}
+	.video{
+		height: 60vh;
+	}
+	.ritual{
+		margin: 50px 0 20px 0;
+	}
+
+	/* --- Galerias horizontais ---
+	   O efeito é o mesmo em todos os tamanhos (ver assets/js/ora-gallery.js).
+	   Aqui só se reduz a altura das imagens. */
+	.storypage-row-track .storypage-item img,
+	.moments-row-track .moments-item img,
+	.martini-row-track .martini-item img{
+		height: 34vh;
+	}
+
+	/* --- Martini: ingredientes e receita --- */
+	.martini-info{
+		gap: 40px;
+	}
+	.martini-info > .col{
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+
+	/* --- Newsletter --- */
+	.newsletter{
+		min-height: 0;
+		padding: 80px 0;
+	}
+	.newsletter-content{
+		margin-bottom: 45px;
+	}
+
+	/* --- Rodapé --- */
+	.footer-top{
+		gap: 35px;
+	}
+	.footer-brand{
+		flex: 0 0 100%;
+	}
+	.footer-links,
+	.footer-connect{
+		flex: 0 0 45%;
+	}
+}
+
+/* =========================================================
+   ≤ 767.98px — telemóvel grande
+   ========================================================= */
+@media (max-width: 767.98px){
+
+	/* Respiro lateral em mobile. O Bootstrap dá 12px de cada lado por
+	   omissão; passa a 24px, igual dos dois lados. Fica no .container e não
+	   no .container-fluid, para as faixas de largura total continuarem a
+	   encostar às margens do ecrã. */
+	.container{
+		padding-left: 24px;
+		padding-right: 24px;
+	}
+
+	h1{ font-size: 38px; line-height: 50px; }
+	h2{ font-size: 42px; line-height: 50px; }
+	h3{ font-size: 38px; line-height: 50px; }
+	h4{ font-size: 24px; line-height: 32px; }
+
+	.story-banner h1,
+	.collection-banner h1,
+	.product-banner h1,
+	.moments-banner h1,
+	.martini-banner h1{
+		font-size: 42px;
+		line-height: 50px;
+	}
+
+	/* As quebras de linha fixas dos textos deixam de se aplicar:
+	   em ecrãs estreitos o texto flui conforme a largura disponível.
+	   As legendas dos cocktails mantêm as suas, porque são deliberadas. */
+	.banner-title h1 br,
+	.story-text br,
+	.storypage-title br,
+	.collection-text br,
+	.moments-title br,
+	.moments-text br,
+	.newsletter-text br,
+	.storypage-text br,
+	.final-title br,
+	.list-text p br,
+	.cocktail-text br,
+	.martini-text br,
+	.experimenta-title br,
+	.recipe-text br,
+	.footer-brand p br{
+		display: none;
+	}
+
+	.banner-title{
+		padding-top: 55vh;
+	}
+
+	.nav-list > li > a{
+		font-size: 28px;
+	}
+
+	/* Imagem e texto continuam lado a lado: recupera-se a largura
+	   da coluna vazia que servia de folga em desktop. */
+	.martini-intro-content > .col-1{
+		display: none;
+	}
+	.martini-intro-content .martini-text{
+		flex: 1 1 auto;
+	}
+	.martini-intro{
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	/* --- Grelhas: duas colunas --- */
+	.collection-img .bebida{
+		flex: 0 0 50%;
+		max-width: 50%;
+	}
+	.bebida a p{
+		font-size: 22px;
+		line-height: 26px;
+		padding: 0 15px 20px 15px;
+	}
+
+	/* --- Homepage --- */
+	.story,
+	.moments,
+	.final{
+		padding: 70px 0;
+		min-height: 0;
+	}
+	.moments{
+		margin-top: 0;
+	}
+	.story-text,
+	.moments-text{
+		margin-bottom: 35px;
+	}
+	.collection{
+		padding: 60px 0;
+	}
+	.collection-title{
+		margin: 35px 0 15px 0;
+	}
+
+	/* --- Story --- */
+	.storypage-info{
+		margin-top: 50px;
+		min-height: 0;
+	}
+	.storypage-text{
+		margin-bottom: 50px;
+	}
+	.ritual-scroll{
+		height: 250vh;
+	}
+
+	/* O indicador de scroll existe só em mobile (escondido por omissão
+	   em assets/css/style.css). */
+	.scroll{
+		display: block;
+	}
+
+	/* Vídeo do ritual em ecrã inteiro: sai da grelha do container para
+	   ocupar toda a largura e toda a altura do viewport. */
+	.ritual .video{
+		height: 100vh;
+		width: 100%;
+		max-width: none;
+		padding-left: 0;
+		padding-right: 0;
+		margin-left: 0;
+		margin-right: 0;
+	}
+	.ritual .video-text{
+		padding: 0 24px;
+	}
+
+	/* --- Collection --- */
+	.bestseller{
+		margin-top: 60px;
+		margin-bottom: 60px;
+		min-height: 0;
+	}
+	.summer,
+	.newyear{
+		margin-bottom: 60px;
+	}
+	.collection-term{
+		margin-top: 60px;
+		margin-bottom: 60px;
+	}
+	.carousel-arrow{
+		width: 38px;
+		height: 38px;
+	}
+
+	/* --- Produto / cocktail --- */
+	.martini-intro,
+	.product-banner + .martini-intro{
+		min-height: 0;
+		padding: 60px 0;
+	}
+	.martini-content{
+		padding-bottom: 20px;
+	}
+	.martini-img{
+		margin-bottom: 60px;
+	}
+	.experimenta{
+		margin-bottom: 60px;
+	}
+	.experimenta-title{
+		margin-bottom: 50px;
+	}
+	.cocktail-time{
+		margin-top: 60px;
+	}
+	.cocktail-title{
+		margin-bottom: 30px;
+	}
+	.cocktail-text{
+		margin-bottom: 50px;
+	}
+	.moments-banner{
+		margin-bottom: 60px;
+	}
+
+	.storypage-row-track .storypage-item img,
+	.moments-row-track .moments-item img,
+	.martini-row-track .martini-item img{
+		height: 30vh;
+	}
+
+	/* --- Newsletter --- */
+	.newsletter{
+		padding: 60px 0;
+	}
+	.newsletter input[type="text"],
+	.newsletter input[type="email"]{
+		width: 360px;
+		font-size: 16px;
+		padding: 11px 20px;
+		margin-bottom: 8px;
+	}
+	.newsletter input[type="submit"]{
+		font-size: 16px;
+		padding: 11px 28px;
+		margin-top: 14px;
+	}
+
+	/* --- Botões mais contidos ---
+	   O círculo de preenchimento do hover é desenhado a partir das medidas do
+	   botão, por isso acompanha-as. */
+	.btn-branco,
+	.btn-vermelho{
+		width: 130px;
+		height: 44px;
+		font-size: 17px;
+		line-height: 24px;
+	}
+	.btn-branco::before,
+	.btn-vermelho::before{
+		top: 44px;
+		width: 130px;
+		height: 130px;
+	}
+	.btn-branco:hover::before,
+	.btn-vermelho:hover::before,
+	.btn-branco.is-pressed::before,
+	.btn-vermelho.is-pressed::before{
+		transform: translateY(-86px);
+	}
+
+	/* --- Conteúdo editorial --- */
+	.legal-content{
+		padding: 80px 0 70px 0;
+	}
+	.legal-content h2{
+		font-size: 32px;
+		line-height: 40px;
+	}
+	.legal-content h3{
+		font-size: 26px;
+		line-height: 34px;
+	}
+	.legal-content p,
+	.legal-content li{
+		font-size: 18px;
+		line-height: 28px;
+	}
+
+	/* --- Rodapé --- */
+	.footer{
+		padding: 50px 0 25px 0;
+	}
+	.footer-links,
+	.footer-connect{
+		flex: 0 0 100%;
+	}
+	.footer-bottom{
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 12px;
+	}
+}
+
+/* =========================================================
+   ≤ 575.98px — telemóvel
+   ========================================================= */
+@media (max-width: 575.98px){
+
+	h1{ font-size: 32px; line-height: 42px; }
+	h2{ font-size: 34px; line-height: 42px; }
+	h3{ font-size: 32px; line-height: 42px; }
+	p{ font-size: 16px; line-height: 24px; }
+
+	.story-banner h1,
+	.collection-banner h1,
+	.product-banner h1,
+	.moments-banner h1,
+	.martini-banner h1{
+		font-size: 34px;
+		line-height: 42px;
+	}
+
+	.banner-title{
+		padding-top: 52vh;
+	}
+
+	.nav{
+		padding: 100px 20px 50px 20px;
+	}
+	.nav-list > li > a{
+		font-size: 26px;
+	}
+
+	/* Uma coluna. */
+	.experimenta-img .product-card{
+		flex: 0 0 100%;
+		max-width: 100%;
+	}
+
+	/* Garrafas da Collection e cocktails dos Moments: duas por linha. */
+	.summer-img .product-card,
+	.newyear-img .product-card,
+	.collection-term .product-card,
+	.collection-img .bebida{
+		flex: 0 0 50%;
+		max-width: 50%;
+		margin-bottom: 30px;
+	}
+	/* A faixa da homepage fica ainda mais contida no telemóvel. */
+	.collection .collection-img{
+		--bs-gutter-x: 8px;
+	}
+	.collection .collection-img .col{
+		flex: 0 0 25%;
+		max-width: 25%;
+	}
+	.collection{
+		padding: 60px 0;
+	}
+
+	.bebida a p{
+		font-size: 26px;
+		line-height: 30px;
+	}
+
+	.moments > .moments-img .selo-meio{
+		max-width: 200px;
+	}
+
+	.btn-branco,
+	.btn-vermelho{
+		width: 120px;
+		height: 40px;
+		font-size: 16px;
+		line-height: 22px;
+	}
+	.btn-branco::before,
+	.btn-vermelho::before{
+		top: 40px;
+		width: 120px;
+		height: 120px;
+	}
+	.btn-branco:hover::before,
+	.btn-vermelho:hover::before,
+	.btn-branco.is-pressed::before,
+	.btn-vermelho.is-pressed::before{
+		transform: translateY(-80px);
+	}
+
+	.newsletter input[type="text"],
+	.newsletter input[type="email"]{
+		width: 280px;
+		font-size: 15px;
+		padding: 10px 18px;
+	}
+	.newsletter input[type="submit"]{
+		font-size: 15px;
+		padding: 10px 26px;
+	}
+
+	.storypage-row-track .storypage-item img,
+	.moments-row-track .moments-item img,
+	.martini-row-track .martini-item img{
+		height: 26vh;
+	}
+	.storypage-row-track .storypage-item,
+	.moments-row-track .moments-item,
+	.martini-row-track .martini-item{
+		margin-right: 12px;
+	}
+
+	.video{
+		height: 48vh;
+	}
+	.ritual-scroll{
+		height: 220vh;
+	}
+}
+
+/* =========================================================
+   Ecrãs baixos na horizontal (telemóvel deitado)
+   ========================================================= */
+@media (max-height: 520px) and (orientation: landscape){
+	.banner-title{
+		padding-top: 45vh;
+	}
+	.nav{
+		align-items: flex-start;
+		padding-top: 90px;
+	}
+	.nav-list > li > a{
+		font-size: 22px;
+		line-height: 1.4;
+	}
+	.second-list{
+		padding-bottom: 12px;
+	}
+}
+
+/* =========================================================
+   Preferência por menos movimento
+   ========================================================= */
+@media (prefers-reduced-motion: reduce){
+	.scroll{
+		animation: none;
+	}
+	.bestseller-slot,
+	.nav,
+	.header,
+	.bebida .overlay,
+	.product-card-img img{
+		transition-duration: .01ms !important;
+	}
+	.product-card a:hover .product-card-img img{
+		transform: none;
+	}
+}
